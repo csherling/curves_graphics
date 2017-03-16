@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 
 #include "ml6.h"
 #include "display.h"
@@ -19,6 +20,12 @@
 void add_circle( struct matrix * points, 
 		 double cx, double cy, double cz,
 		 double r, double step ) {
+  int i;
+  for(i=0;i<step;i++){
+    add_edge(points,
+	     r*cos(2*M_PI*(i/step))+cx,r*sin(2*M_PI*(i/step))+cy,cz,
+	     r*cos(2*M_PI*((i+1)/step))+cx,r*sin(2*M_PI*((i+1)/step))+cy,cz);
+  }
 }
 
 /*======== void add_curve() ==========
@@ -38,7 +45,7 @@ Returns:
 Adds the curve bounded by the 4 points passsed as parameters
 of type specified in type (see matrix.h for curve type constants)
 to the matrix points
-====================*/
+
 void add_curve( struct matrix *points, 
 		double x0, double y0, 
 		double x1, double y1, 
@@ -46,7 +53,7 @@ void add_curve( struct matrix *points,
 		double x3, double y3, 
 		double step, int type ) {
 }
-
+====================*/
 
 /*======== void add_point() ==========
 Inputs:   struct matrix * points
