@@ -45,6 +45,7 @@ Returns:
 Adds the curve bounded by the 4 points passsed as parameters
 of type specified in type (see matrix.h for curve type constants)
 to the matrix points
+====================*/
 
 void add_curve( struct matrix *points, 
 		double x0, double y0, 
@@ -52,8 +53,42 @@ void add_curve( struct matrix *points,
 		double x2, double y2, 
 		double x3, double y3, 
 		double step, int type ) {
+
+  int i;
+
+  struct matrix * xco;
+  xco = new_matrix(4,1);
+  struct matrix * yco;
+  yco = new_matrix(4,1);
+  xco=generate_curve_coefs(x0,x1,x2,x3,type);
+  yco=generate_curve_coefs(y0,y1,y2,y3,type);
+
+  double xc0,xc1,xc2,xc3;
+  xc0 = xco->m[0][0];
+  xc1 = xco->m[0][1];
+  xc2 = xco->m[0][2];
+  xc3 = xco->m[0][3];
+
+  double yc0,yc1,yc2,yc3;
+  yc0 = yco->m[0][0];
+  yc1 = yco->m[0][1];
+  yc2 = yco->m[0][2];
+  yc3 = yco->m[0][3];
+  
+  for(i=0;i<step;i++){
+    
+
+    add_edge(points,
+	     xc0*pow((i/step),3)+xc1*pow((i/step),2)+xc2*pow((i/step),1)+xc3*pow((i/step),0),
+	     yc0*pow((i/step),3)+yc1*pow((i/step),2)+yc2*pow((i/step),1)+yc3*pow((i/step),0),
+	     0,
+	     xc0*pow((i/step+step),3)+xc1*pow((i/step+step),2)+xc2*pow((i/step+step),1)+xc3*pow((i/step+step),0),
+	     yc0*pow((i/step+step),3)+yc1*pow((i/step+step),2)+yc2*pow((i/step+step),1)+yc3*pow((i/step+step),0),
+	     0,
+	     )
+  }
 }
-====================*/
+
 
 /*======== void add_point() ==========
 Inputs:   struct matrix * points
