@@ -29,6 +29,8 @@ struct matrix * make_bezier() {
   bez->m[3][1]=0;
   bez->m[3][2]=0;
   bez->m[3][3]=0;
+
+  print_matrix(bez);
   
   return bez;
 }
@@ -41,8 +43,8 @@ struct matrix * make_bezier() {
   the coefiecients for a hermite curve
   ====================*/
 struct matrix * make_hermite() {
-  struct matrix * herm;
-  herm = new_matrix(4,4);
+  struct matrix * herm = new_matrix(4,4);
+  ident(herm);
   
   herm->m[0][0]=2;
   herm->m[0][1]=-2;
@@ -51,7 +53,7 @@ struct matrix * make_hermite() {
   herm->m[1][0]=-3;
   herm->m[1][1]=3;
   herm->m[1][2]=-2;
-  herm->m[1][3]=1;
+  herm->m[1][3]=-1;
   herm->m[2][0]=0;
   herm->m[2][1]=0;
   herm->m[2][2]=1;
@@ -60,6 +62,10 @@ struct matrix * make_hermite() {
   herm->m[3][1]=0;
   herm->m[3][2]=0;
   herm->m[3][3]=0;
+
+  print_matrix(herm);
+  printf("Herm\n");
+  fflush(stdout);
   
   return herm;
 }
@@ -80,15 +86,16 @@ struct matrix * make_hermite() {
   ====================*/
 struct matrix * generate_curve_coefs( double p1, double p2, 
 				      double p3, double p4, int type) {
-  struct matrix * curve;
-  curve = new_matrix(4,4);
-  struct matrix * co;
-  co = new_matrix(4,1);
+  struct matrix * curve = new_matrix(4,4);
+  ident(curve);
+  struct matrix * co = new_matrix(4,1);
+  ident(co);
   co->m[0][0]=p1;
   co->m[1][0]=p2;
   co->m[2][0]=p3;
   co->m[3][0]=p4;
   if(type == HERMITE){
+    printf("got here\n");
     curve=make_hermite();
   }
   else{
